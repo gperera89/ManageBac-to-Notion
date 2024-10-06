@@ -15,7 +15,7 @@ function sleep(ms) {
 function getYesterdayDate() {
 	const yesterday = new Date();
 	yesterday.setDate(yesterday.getDate() - 1);
-	return yesterday.toISOString().split("T")[0] + "T00:00:00+08:00"; // Set time to 00:00 in Perth (UTC+08:00)
+	return yesterday.toISOString().split("T")[0] + "T00:00:00+08:00"; // Set time to 00:00 in China (UTC+08:00)
 }
 
 // Function to add a behavior note to Notion
