@@ -1,0 +1,30 @@
+name: Run ManageBac to Notion Script
+
+on:
+  schedule:
+    # Run the script at 5 AM every day (UTC)
+    - cron: "0 21 * * *" # This runs at 5 AM in China timezone (UTC+08:00)
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create .env file
+        run: |
+          echo "MANAGEBAC_API_KEY=${{ secrets.MANAGEBAC_API_KEY }}" >> .env
+          echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
+          echo "NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}" >> .env
+
+      - name: Run Script
+        run: node script.js
