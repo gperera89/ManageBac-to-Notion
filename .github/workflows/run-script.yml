@@ -1,5 +1,3 @@
-name: Run ManageBac to Notion Script
-
 on:
   schedule:
     # Run the script at 5 AM every day (UTC)
@@ -15,7 +13,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
 
       - name: Install Dependencies
         run: npm install
@@ -27,4 +25,4 @@ jobs:
           echo "NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}" >> .env
 
       - name: Run Script
-        run: node script.js
+        run: node index.js
