@@ -18,6 +18,9 @@ jobs:
       - name: Verify Node.js Version
         run: node -v
 
+      - name: List Directory Contents
+        run: ls -la
+
       - name: Install Dependencies
         run: npm install
 
