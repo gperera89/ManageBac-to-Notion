@@ -1,0 +1,12 @@
+{
+	"name": "notion-managebac-integration",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"dotenv": "^10.0.0",
+		"axios": "^0.21.1"
+	}
+}
