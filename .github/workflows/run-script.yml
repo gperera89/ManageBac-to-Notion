@@ -31,4 +31,4 @@ jobs:
           echo "NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}" >> .env
 
       - name: Run Script
-        run: node index.js
+        run: node Managebac-to-Notion.js
