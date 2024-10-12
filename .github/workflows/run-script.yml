@@ -24,11 +24,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Create .env file
-        run: |
-          echo "MANAGEBAC_API_KEY=${{ secrets.MANAGEBAC_API_KEY }}" >> .env
-          echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
-          echo "NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}" >> .env
-
       - name: Run Script
+        env:
+          MANAGEBAC_API_KEY: ${{ secrets.MANAGEBAC_API_KEY }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: node Managebac-to-Notion.js
