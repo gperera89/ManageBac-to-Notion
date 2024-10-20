@@ -18,11 +18,63 @@ function getYesterdayDate() {
 	return yesterday.toISOString().split("T")[0] + "T00:00:00+08:00"; // Set time to 00:00 in China (UTC+08:00)
 }
 
+// Function to check if a note already exists in Notion
+async function noteExistsInNotion(studentId, incidentTime) {
+	const notionUrl = `https://api.notion.com/v1/databases/${NOTION_DATABASE_ID}/query`;
+
+	try {
+		const response = await axios.post(
+			notionUrl,
+			{
+				filter: {
+					and: [
+						{
+							property: "Student ID",
+							rich_text: {
+								equals: studentId,
+							},
+						},
+						{
+							property: "Incident Time",
+							date: {
+								equals: incidentTime,
+							},
+						},
+					],
+				},
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${NOTION_API_KEY}`,
+					"Content-Type": "application/json",
+					"Notion-Version": "2022-06-28",
+				},
+			}
+		);
+		return response.data.results.length > 0;
+	} catch (error) {
+		console.error("Error checking note in Notion:", error.message);
+		return false;
+	}
+}
+
 // Function to add a behavior note to Notion
 async function addNoteToNotion(note) {
 	const notionUrl = "https://api.notion.com/v1/pages";
 
 	try {
+		// Check if the note already exists in Notion
+		const exists = await noteExistsInNotion(
+			note.student_id,
+			note.incident_time
+		);
+		if (exists) {
+			console.log(
+				`Note for ${note.first_name} ${note.last_name} already exists in Notion.`
+			);
+			return;
+		}
+
 		// First create the page in the Notion database
 		const response = await axios.post(
 			notionUrl,
